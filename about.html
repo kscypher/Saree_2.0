@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us - Nartanasala</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background-color: #fffff0; /* ivory */
+      --text-color: #2F6F5F;       /* sea green */
+      --accent-color: #dda15e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: var(--background-color);
+      border-bottom: 1px solid #ccc;
+      position: relative;
+    }
+
+    .navbar img {
+      height: 120px;
+      object-fit: contain;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: var(--text-color);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-links li {
+      position: relative;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: bold;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-color);
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: var(--background-color);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      min-width: 180px;
+      z-index: 999;
+      border-radius: 4px;
+      padding: 0.5rem 0;
+    }
+
+    .dropdown-menu li a {
+      display: block;
+      padding: 0.6rem 1rem;
+    }
+
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: var(--background-color);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 1rem;
+        border-top: 1px solid #ccc;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .dropdown .dropdown-menu {
+        position: static;
+        display: none;
+        box-shadow: none;
+      }
+
+      .dropdown.active .dropdown-menu {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+
+    main h1 {
+      text-align: center;
+      font-family: 'Great Vibes', cursive;
+      font-size: 2.5rem;
+      color: var(--text-color);
+      margin-bottom: 1.5rem;
+    }
+
+    main p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: var(--background-color);
+      color: var(--text-color);
+      border-top: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div><img src="Narthanasala.jpeg" alt="Logo" /></div>
+    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="dropdown">
+        <a href="#">Sarees ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Featured</a></li>
+          <li><a href="#">Silk</a></li>
+          <li><a href="#">Cotton</a></li>
+          <li><a href="#">Kalamkari</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#">About Us ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="why.html">Why Us</a></li>
+          <li><a href="offer.html">What We Offer</a></li>
+        </ul>
+      </li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </header>
+
+  <main>
+    <h1>🧵 Who We Are</h1>
+    <p>
+      At Narthansala, we are passionate about celebrating the timeless grace and cultural richness of Indian sarees.
+      Based in the heart of Hyderabad, our journey began with a mission to bring authentic, elegant, and diverse saree collections
+      to every woman who loves to drape herself in heritage.
+    </p>
+    <p>
+      From young girls exploring saree engagement looks to brides seeking bridal sarees for their big day,
+      we serve saree lovers of all ages with quality, care, and creativity.
+    </p>
+  </main>
+
+  <footer>&copy; 2025 Nartanasala</footer>
+
+  <script>
+    const toggleBtn = document.getElementById("menu-toggle");
+    const navLinks = document.getElementById("nav-links");
+    const dropdowns = document.querySelectorAll(".dropdown");
+
+    toggleBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+    });
+
+    dropdowns.forEach(dropdown => {
+      dropdown.addEventListener("click", (e) => {
+        if (window.innerWidth <= 768) {
+          e.preventDefault();
+          dropdown.classList.toggle("active");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
