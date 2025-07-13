@@ -20,9 +20,15 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    body {
+    html, body {
+      height: 100%;
       background-color: var(--background-color);
       color: var(--text-color);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
@@ -58,6 +64,7 @@
     }
 
     .cart-container {
+      flex: 1;
       max-width: 900px;
       margin: 0 auto;
       padding: 1rem;
@@ -103,7 +110,6 @@
       background-color: var(--background-color);
       color: var(--text-color);
       border-top: 1px solid #ccc;
-      margin-top: 2rem;
     }
   </style>
 </head>
@@ -120,7 +126,7 @@
 
   <div class="cart-container" id="cart-container">
     <p class="empty-cart" id="empty-msg">Your cart is currently empty.</p>
-    <!-- Cart items will go here -->
+    <!-- Future cart items will render here -->
   </div>
 
   <footer>
@@ -128,8 +134,8 @@
   </footer>
 
   <script>
-    // This is placeholder logic for demo — extend later with real cart storage
-    const cartItems = []; // Pull this from localStorage or backend later
+    // Placeholder for real cart logic
+    const cartItems = []; // Populate this from localStorage or backend
 
     const cartContainer = document.getElementById("cart-container");
     const emptyMsg = document.getElementById("empty-msg");
@@ -157,8 +163,8 @@
     }
 
     function removeItem(id) {
-      // Remove logic will go here later
-      alert("Remove functionality to be added.");
+      // Add logic later
+      alert("Remove functionality not implemented yet.");
     }
 
     renderCart();
