@@ -7,8 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --background-color: #fffff0;  /* Ivory */
-      --text-color: #2F6F5F;        /* Sea green */
+      --background-color: #fffff0;
+      --text-color: #2F6F5F;
       --accent-color: #dda15e;
     }
 
@@ -19,9 +19,15 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       background-color: var(--background-color);
       color: var(--text-color);
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
@@ -31,18 +37,29 @@
       padding: 1rem 2rem;
       background-color: var(--background-color);
       border-bottom: 1px solid #ccc;
-      position: relative;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .navbar img {
-      height: 120px;
+      height: 100px;
       object-fit: contain;
+    }
+
+    .cart-icon {
+      font-size: 1.8rem;
+      text-decoration: none;
     }
 
     .menu-toggle {
       display: none;
       font-size: 1.8rem;
       cursor: pointer;
+      color: var(--text-color);
     }
 
     .nav-links {
@@ -122,6 +139,7 @@
     }
 
     main {
+      flex: 1;
       max-width: 600px;
       margin: 2rem auto;
       padding: 1rem;
@@ -200,10 +218,16 @@
 <body>
 
   <header class="navbar">
-    <div><img src="Narthanasala.jpeg" alt="Logo" /></div>
+    <div class="navbar-left">
+      <a href="index.html"><img src="Narthanasala.jpeg" alt="Logo" /></a>
+      <a href="cart.html" class="cart-icon">🛒</a>
+    </div>
+
     <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
+
       <li class="dropdown">
         <a href="#">Sarees ▾</a>
         <ul class="dropdown-menu">
@@ -213,6 +237,7 @@
           <li><a href="#">Kalamkari</a></li>
         </ul>
       </li>
+
       <li class="dropdown">
         <a href="#">Info ▾</a>
         <ul class="dropdown-menu">
@@ -221,6 +246,16 @@
           <li><a href="offer.html">What We Offer</a></li>
         </ul>
       </li>
+
+      <li class="dropdown">
+        <a href="#">Settings ▾</a>
+        <ul class="dropdown-menu" id="settings-menu">
+          <li id="login-link"><a href="login.html">LogIn</a></li>
+          <li id="signup-link"><a href="signup.html">Sign Up</a></li>
+          <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </li>
+
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </header>
@@ -236,7 +271,7 @@
   </main>
 
   <footer>
-    <div class="social-links" aria-label="Social media links">
+    <div class="social-links">
       <a href="https://www.instagram.com/_narthanasala_?utm_source=ig_web_button_share_sheet&igsh=cTJxYmZybG84dnI5">📸 Instagram</a>
       <a href="http://wa.me/+919000110447">💬 WhatsApp</a>
       <a href="https://www.facebook.com/people/Narthanasala/61576403633996/">🌐 Facebook</a>
@@ -270,7 +305,30 @@
       const link = `https://wa.link/i5j56i?text=Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
       window.open(link, '_blank');
     }
-  </script>
 
+    if (!sessionStorage.getItem("sessionInitialized")) {
+      localStorage.removeItem("loggedIn");
+      sessionStorage.setItem("sessionInitialized", "true");
+    }
+
+    const loginLink = document.getElementById("login-link");
+    const signupLink = document.getElementById("signup-link");
+    const logoutLink = document.getElementById("logout-link");
+
+    function updateMenu() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      loginLink.style.display = isLoggedIn ? "none" : "block";
+      signupLink.style.display = isLoggedIn ? "none" : "block";
+      logoutLink.style.display = isLoggedIn ? "block" : "none";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      updateMenu();
+      alert("Logged out successfully.");
+    }
+
+    updateMenu();
+  </script>
 </body>
 </html>
