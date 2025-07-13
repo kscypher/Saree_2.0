@@ -8,8 +8,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --background-color: #fffff0;  /* Ivory */
-      --text-color: #2F6F5F;        /* Sea green */
+      --background-color: #fffff0;
+      --text-color: #2F6F5F;
       --accent-color: #dda15e;
     }
 
@@ -35,9 +35,24 @@
       position: relative;
     }
 
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
     .navbar img {
       height: 120px;
       object-fit: contain;
+    }
+
+    .cart-icon {
+      font-size: 1.8rem;
+      text-decoration: none;
+    }
+
+    .cart-icon:hover {
+      color: var(--accent-color);
     }
 
     .menu-toggle {
@@ -154,10 +169,15 @@
 <body>
 
   <header class="navbar">
-    <div><img src="Narthanasala.jpeg" alt="Logo" /></div>
+    <div class="navbar-left">
+      <img src="Narthanasala.jpeg" alt="Logo" />
+      <a href="cart.html" title="Cart" class="cart-icon">🛒</a>
+    </div>
+
     <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
     <ul class="nav-links" id="nav-links">
-      <li><a href="index.html">Home</a></li>
+      <!-- Sarees Dropdown -->
       <li class="dropdown">
         <a href="#">Sarees ▾</a>
         <ul class="dropdown-menu">
@@ -167,6 +187,8 @@
           <li><a href="#">Kalamkari</a></li>
         </ul>
       </li>
+
+      <!-- Info Dropdown -->
       <li class="dropdown">
         <a href="#">Info ▾</a>
         <ul class="dropdown-menu">
@@ -175,6 +197,17 @@
           <li><a href="offer.html">What We Offer</a></li>
         </ul>
       </li>
+
+      <!-- Settings Dropdown -->
+      <li class="dropdown">
+        <a href="#">Settings ▾</a>
+        <ul class="dropdown-menu" id="settings-menu">
+          <li id="login-link"><a href="login.html">LogIn</a></li>
+          <li id="signup-link"><a href="signup.html">Sign Up</a></li>
+          <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </li>
+
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </header>
@@ -207,6 +240,31 @@
         }
       });
     });
+
+    const loginLink = document.getElementById("login-link");
+    const signupLink = document.getElementById("signup-link");
+    const logoutLink = document.getElementById("logout-link");
+
+    // 🔁 Clear login status once per tab session
+    if (!sessionStorage.getItem("sessionInitialized")) {
+      localStorage.removeItem("loggedIn");
+      sessionStorage.setItem("sessionInitialized", "true");
+    }
+
+    function updateMenu() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      loginLink.style.display = isLoggedIn ? "none" : "block";
+      signupLink.style.display = isLoggedIn ? "none" : "block";
+      logoutLink.style.display = isLoggedIn ? "block" : "none";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      updateMenu();
+      alert("Logged out successfully.");
+    }
+
+    updateMenu();
   </script>
 
 </body>
