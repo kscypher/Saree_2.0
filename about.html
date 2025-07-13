@@ -19,9 +19,15 @@
       font-family: 'Poppins', sans-serif;
     }
 
-    body {
+    html, body {
+      height: 100%;
       background-color: var(--background-color);
       color: var(--text-color);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
     }
 
     .navbar {
@@ -31,12 +37,22 @@
       padding: 1rem 2rem;
       background-color: var(--background-color);
       border-bottom: 1px solid #ccc;
-      position: relative;
+    }
+
+    .navbar-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .navbar img {
-      height: 120px;
+      height: 100px;
       object-fit: contain;
+    }
+
+    .cart-icon {
+      font-size: 1.8rem;
+      text-decoration: none;
     }
 
     .menu-toggle {
@@ -123,6 +139,7 @@
     }
 
     main {
+      flex: 1;
       max-width: 1000px;
       margin: 2rem auto;
       padding: 1rem;
@@ -153,10 +170,16 @@
 </head>
 <body>
   <header class="navbar">
-    <div><img src="Narthanasala.jpeg" alt="Logo" /></div>
+    <div class="navbar-left">
+      <a href="index.html"><img src="Narthanasala.jpeg" alt="Logo" /></a>
+      <a href="cart.html" class="cart-icon">🛒</a>
+    </div>
+
     <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+
     <ul class="nav-links" id="nav-links">
       <li><a href="index.html">Home</a></li>
+
       <li class="dropdown">
         <a href="#">Sarees ▾</a>
         <ul class="dropdown-menu">
@@ -166,14 +189,25 @@
           <li><a href="#">Kalamkari</a></li>
         </ul>
       </li>
+
       <li class="dropdown">
-        <a href="#">About Us ▾</a>
+        <a href="#">Info ▾</a>
         <ul class="dropdown-menu">
           <li><a href="about.html">About Us</a></li>
           <li><a href="why.html">Why Us</a></li>
           <li><a href="offer.html">What We Offer</a></li>
         </ul>
       </li>
+
+      <li class="dropdown">
+        <a href="#">Settings ▾</a>
+        <ul class="dropdown-menu" id="settings-menu">
+          <li id="login-link"><a href="login.html">LogIn</a></li>
+          <li id="signup-link"><a href="signup.html">Sign Up</a></li>
+          <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+      </li>
+
       <li><a href="contact.html">Contact</a></li>
     </ul>
   </header>
@@ -191,7 +225,7 @@
     </p>
   </main>
 
-  <footer>&copy; 2025 Nartanasala</footer>
+  <footer>&copy; 2025 Nartanasala. All rights reserved.</footer>
 
   <script>
     const toggleBtn = document.getElementById("menu-toggle");
@@ -210,6 +244,30 @@
         }
       });
     });
+
+    const loginLink = document.getElementById("login-link");
+    const signupLink = document.getElementById("signup-link");
+    const logoutLink = document.getElementById("logout-link");
+
+    if (!sessionStorage.getItem("sessionInitialized")) {
+      localStorage.removeItem("loggedIn");
+      sessionStorage.setItem("sessionInitialized", "true");
+    }
+
+    function updateMenu() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
+      loginLink.style.display = isLoggedIn ? "none" : "block";
+      signupLink.style.display = isLoggedIn ? "none" : "block";
+      logoutLink.style.display = isLoggedIn ? "block" : "none";
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedIn");
+      updateMenu();
+      alert("Logged out successfully.");
+    }
+
+    updateMenu();
   </script>
 </body>
 </html>
