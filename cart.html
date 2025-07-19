@@ -104,6 +104,28 @@
       margin-top: 3rem;
     }
 
+    .total-box {
+      text-align: right;
+      font-size: 1.2rem;
+      margin-top: 2rem;
+      font-weight: bold;
+    }
+
+    .clear-btn {
+      margin: 1rem auto;
+      display: block;
+      padding: 0.6rem 1.5rem;
+      background: #c94d3f;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .clear-btn:hover {
+      background-color: #a93d32;
+    }
+
     footer {
       text-align: center;
       padding: 1rem;
@@ -126,45 +148,69 @@
 
   <div class="cart-container" id="cart-container">
     <p class="empty-cart" id="empty-msg">Your cart is currently empty.</p>
-    <!-- Future cart items will render here -->
   </div>
+
+  <div class="total-box" id="total-box" style="display: none;"></div>
+  <button class="clear-btn" onclick="clearCart()" id="clear-btn" style="display: none;">Clear Cart</button>
 
   <footer>
     &copy; 2025 Nartanasala. All rights reserved.
   </footer>
 
   <script>
-    // Placeholder for real cart logic
-    const cartItems = []; // Populate this from localStorage or backend
-
     const cartContainer = document.getElementById("cart-container");
     const emptyMsg = document.getElementById("empty-msg");
+    const totalBox = document.getElementById("total-box");
+    const clearBtn = document.getElementById("clear-btn");
 
     function renderCart() {
-      if (cartItems.length === 0) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cart.length === 0) {
         emptyMsg.style.display = "block";
+        totalBox.style.display = "none";
+        clearBtn.style.display = "none";
         return;
       }
 
+      cartContainer.innerHTML = "";
       emptyMsg.style.display = "none";
-      cartItems.forEach(item => {
+      totalBox.style.display = "block";
+      clearBtn.style.display = "block";
+
+      let grandTotal = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        grandTotal += itemTotal;
+
         const div = document.createElement("div");
         div.className = "cart-item";
         div.innerHTML = `
           <div>
-            <h3>${item.name}</h3>
+            <h3>${item.product}</h3>
             <p>Quantity: ${item.quantity}</p>
-            <p>Price: ₹${item.price}</p>
+            <p>Price: ₹${item.price} each</p>
+            <p>Total: ₹${itemTotal}</p>
           </div>
           <button onclick="removeItem('${item.id}')">Remove</button>
         `;
         cartContainer.appendChild(div);
       });
+
+      totalBox.textContent = `Grand Total: ₹${grandTotal}`;
     }
 
     function removeItem(id) {
-      // Add logic later
-      alert("Remove functionality not implemented yet.");
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart = cart.filter(item => item.id !== id);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      renderCart();
+    }
+
+    function clearCart() {
+      localStorage.removeItem('cart');
+      renderCart();
     }
 
     renderCart();
