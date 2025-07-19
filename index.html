@@ -29,6 +29,7 @@
     body {
       display: flex;
       flex-direction: column;
+      min-height: 100vh;
     }
 
     .navbar {
@@ -38,6 +39,7 @@
       padding: 1rem 2rem;
       background-color: var(--background-color);
       border-bottom: 1px solid #ccc;
+      flex-wrap: wrap;
     }
 
     .navbar-left {
@@ -47,8 +49,7 @@
     }
 
     .navbar img {
-      height: 120px;
-      object-fit: contain;
+      height: 80px;
     }
 
     .cart-icon {
@@ -62,7 +63,7 @@
 
     .menu-toggle {
       display: none;
-      font-size: 1.8rem;
+      font-size: 2rem;
       cursor: pointer;
     }
 
@@ -109,39 +110,6 @@
       display: block;
     }
 
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
-      }
-
-      .nav-links {
-        display: none;
-        flex-direction: column;
-        background-color: var(--background-color);
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 1rem;
-        border-top: 1px solid #ccc;
-      }
-
-      .nav-links.active {
-        display: flex;
-      }
-
-      .dropdown .dropdown-menu {
-        position: static;
-        display: none;
-        box-shadow: none;
-      }
-
-      .dropdown.active .dropdown-menu {
-        display: flex;
-        flex-direction: column;
-      }
-    }
-
     main {
       flex: 1;
       max-width: 1000px;
@@ -163,12 +131,87 @@
       text-align: center;
     }
 
+    .saree-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .saree-gallery img {
+      width: 100%;
+      max-width: 320px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .lightbox img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+    }
+
     footer {
       text-align: center;
       padding: 1rem;
       background-color: var(--background-color);
       color: var(--text-color);
       border-top: 1px solid #ccc;
+    }
+
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        background-color: var(--background-color);
+        width: 100%;
+        padding: 1rem;
+        border-top: 1px solid #ccc;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .dropdown .dropdown-menu {
+        position: static;
+        box-shadow: none;
+      }
+
+      .dropdown.active .dropdown-menu {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .navbar-left {
+        width: 100%;
+        justify-content: space-between;
+      }
     }
   </style>
 </head>
@@ -177,24 +220,19 @@
   <header class="navbar">
     <div class="navbar-left">
       <img src="Narthanasala.jpeg" alt="Logo" />
-      <a href="cart.html" title="Cart" class="cart-icon">🛒</a>
+      <div class="menu-toggle" id="menu-toggle">&#9776;</div>
     </div>
 
-    <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-
     <ul class="nav-links" id="nav-links">
-      <!-- Sarees Dropdown -->
       <li class="dropdown">
         <a href="#">Sarees ▾</a>
         <ul class="dropdown-menu">
           <li><a href="#">Featured</a></li>
-          <li><a href="#">Silk</a></li>
+          <li><a href="silk.html">Silk Sarees</a></li> <!-- ✅ Updated link -->
           <li><a href="#">Cotton</a></li>
           <li><a href="#">Kalamkari</a></li>
         </ul>
       </li>
-
-      <!-- Info Dropdown -->
       <li class="dropdown">
         <a href="#">Info ▾</a>
         <ul class="dropdown-menu">
@@ -203,50 +241,48 @@
           <li><a href="offer.html">What We Offer</a></li>
         </ul>
       </li>
-
-      <!-- Settings Dropdown -->
       <li class="dropdown">
         <a href="#">Settings ▾</a>
-        <ul class="dropdown-menu" id="settings-menu">
+        <ul class="dropdown-menu">
           <li id="login-link"><a href="login.html">LogIn</a></li>
           <li id="signup-link"><a href="signup.html">Sign Up</a></li>
           <li id="logout-link" style="display: none;"><a href="#" onclick="logout()">Logout</a></li>
+          <li id="contact-link"><a href="contact.html">Contact Us</a></li>
         </ul>
       </li>
-
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="cart.html" class="cart-icon">🛒</a></li>
     </ul>
   </header>
 
   <main>
     <h1>🧵 Welcome to Nartanasala</h1>
     <p>
-      Discover the soul of Indian tradition with our exclusive saree collections. From timeless silks to modern drapes, Nartanasala brings culture, grace, and craftsmanship to your wardrobe. Explore now and find your perfect style.
+      Discover the soul of Indian tradition with our exclusive saree collections. From timeless silks to modern drapes, Nartanasala brings culture, grace, and craftsmanship to your wardrobe.
     </p>
+
+    <div class="saree-gallery">
+      <img src="img/k-saree.png" alt="Kalamkari Saree" class="zoomable" />
+      <img src="img/d-saree.png" alt="Designer Saree" class="zoomable" />
+    </div>
   </main>
+
+  <div class="lightbox" id="lightbox">
+    <img id="lightbox-img" src="" alt="Zoomed Saree" />
+  </div>
 
   <footer>
     &copy; 2025 Nartanasala. All rights reserved.
   </footer>
 
   <script>
+    // Responsive Menu
     const toggleBtn = document.getElementById("menu-toggle");
     const navLinks = document.getElementById("nav-links");
-    const dropdowns = document.querySelectorAll(".dropdown");
-
     toggleBtn.addEventListener("click", () => {
       navLinks.classList.toggle("active");
     });
 
-    dropdowns.forEach(dropdown => {
-      dropdown.addEventListener("click", (e) => {
-        if (window.innerWidth <= 768) {
-          e.preventDefault();
-          dropdown.classList.toggle("active");
-        }
-      });
-    });
-
+    // Login Logic
     const loginLink = document.getElementById("login-link");
     const signupLink = document.getElementById("signup-link");
     const logoutLink = document.getElementById("logout-link");
@@ -270,6 +306,22 @@
     }
 
     updateMenu();
+
+    // Lightbox Image Zoom
+    const lightbox = document.getElementById("lightbox");
+    const lightboxImg = document.getElementById("lightbox-img");
+
+    document.querySelectorAll(".zoomable").forEach(img => {
+      img.addEventListener("click", () => {
+        lightbox.style.display = "flex";
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt;
+      });
+    });
+
+    lightbox.addEventListener("click", () => {
+      lightbox.style.display = "none";
+    });
   </script>
 
 </body>
